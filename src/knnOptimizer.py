@@ -11,18 +11,21 @@ from sklearn.cross_validation import train_test_split
 
 # X, y = load_svmlight_file('datasets/home_2_5pt.svmlight')
 # X, y = load_svmlight_file('datasets/com1_2_itr4.svmlight')
+# X, y = load_svmlight_file('../datasets/com1_2_211014_itr1.svmlight')
 X, y = load_svmlight_file('../datasets/com1_2_181014_itr5.svmlight')
+# X, y = load_svmlight_file('../datasets/test.svmlight')
 
 # Split the dataset in two equal parts
 X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.1, random_state=random.randrange(1, 20))
+    X, y, test_size=0.15, random_state=random.randrange(1, 80))
  
  
 features = ['density', 'sulphates', 'residual_sugar']
  
 results = []
-for n in range(1, 50, 1):
-    clf = KNeighborsClassifier(n_neighbors=n)
+for n in range(1, 10, 1):
+    clf = KNeighborsClassifier(n_neighbors=n, weights='distance')
+    # clf = KNeighborsClassifier(n_neighbors=n)
     clf.fit(X_train, y_train)
     preds = clf.predict(X_test)
     # accuracy = np.where(preds==test['high_quality'], 1, 0).sum() / float(len(test))
@@ -34,7 +37,7 @@ for n in range(1, 50, 1):
 results = pd.DataFrame(results, columns=["n", "accuracy"])
  
 axes = pl.gca()
-axes.set_ylim([0,1])
+axes.set_ylim([0.7,1])
 pl.plot(results.n, results.accuracy)
 pl.title("Accuracy with Increasing K")
 pl.show()

@@ -18,11 +18,12 @@ from sklearn.grid_search import GridSearchCV
 from sklearn.metrics import classification_report
 
 
-X, y = load_svmlight_file('../datasets/com1_2_181014_itr5.svmlight')
+# X, y = load_svmlight_file('../datasets/com1_2_181014_itr5.svmlight')
+X, y = load_svmlight_file('../datasets/test.svmlight')
 
 # Split the dataset in two equal parts
 X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.15, random_state=random.randrange(1, 400))
+    X, y, test_size=0.15, random_state=random.randrange(1, 80))
 
 # Set the parameters by cross-validation
 tuned_parameters = [{'kernel': ['rbf'], 'gamma': [1e-3, 1e-4],
